@@ -12,8 +12,8 @@
     -->
     <group ns="left_arm">
         <remap from="/follow_joint_trajectory" to="scaled_pos_traj_controller/follow_joint_trajectory"/>
-        <include file="$(find ur5_e_moveit_config)/launch/move_group.launch">
-            <arg name="limited" default="false"/>
+        <include file="$(find ur5e_moveit_config)/launch/move_group.launch">
+            <!--似乎已废弃<arg name="limited" default="false"/>-->
             <!-- 是否使用关节限制 -->
             <arg name="debug" default="false" />
             <!-- 是否开启调试 -->
@@ -22,8 +22,8 @@
 
     <group ns="right_arm">
         <remap from="/follow_joint_trajectory" to="scaled_pos_traj_controller/follow_joint_trajectory"/>
-        <include file="$(find ur5_e_moveit_config)/launch/move_group.launch">
-            <arg name="limited" default="false"/>
+        <include file="$(find ur5e_moveit_config)/launch/move_group.launch">
+            <!--似乎已废弃arg name="limited" default="false"/>-->
             <arg name="debug" default="false" />
         </include>
     </group>
