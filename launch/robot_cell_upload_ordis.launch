@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- <param name="robot_cell_description" textfile="$(find ur_e_description)/urdf/robot_cell.sdf" /> -->
+    <!-- 使用xacro宏处理器将robot_cell.sdf文件转换为URDF格式 -->
+    <!-- robot_cell_description 是自定义参数，用于描述完整工作单元
+        SDF 文件用于详细描述仿真环境和物理特性
+        两者结合使用可以创建完整的机器人工作环境仿真-->
+    <param name="robot_cell_description" command="$(find xacro)/xacro --inorder '$(find ur_e_description)/urdf/robot_cell.sdf'" />
+</launch>

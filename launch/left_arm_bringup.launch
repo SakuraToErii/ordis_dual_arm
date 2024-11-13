@@ -4,22 +4,89 @@
     <arg name="robot_ip" default="192.168.0.2" doc="IP address by which the robot can be reached."/>
     <arg name="reverse_port" default="50001" doc="Port that will be opened by the driver to allow direct communication between the driver and the robot controller."/>
     <arg name="script_sender_port" default="50002" doc="The driver will offer an interface to receive the program's URScript on this port. If the robot cannot connect to this port, `External Control` will stop immediately."/>
+    <arg name="trajectory_port" default="50003" doc="Port that will be opened by the driver to allow trajectory forwarding."/>
+    <arg name="script_command_port" default="50004" doc="Port that will be opened by the driver to allow forwarding script commands to the robot."/>
+
+    <!-- TF前缀参数：用于在tf树中为机器人添加命名空间前缀 -->
+    <!-- 例如：如果 tf_prefix="left_"，那么所有的关节和链接名称都会加上"left_"前缀 -->
     <arg name="tf_prefix" default="" doc="tf_prefix used for the robot."/>
+
+    <!-- 默认启动的控制器列表：这些控制器会在启动时自动激活 -->
+    <!-- joint_state_controller: 发布关节状态信息 -->
+    <!-- scaled_pos_joint_traj_controller: 带速度缩放的位置轨迹控制器 -->
+    <!-- speed_scaling_state_controller: 速度缩放状态控制器 -->
+    <!-- force_torque_sensor_controller: 力矩传感器控制器 -->
     <arg name="controllers" default="joint_state_controller scaled_pos_joint_traj_controller speed_scaling_state_controller force_torque_sensor_controller" doc="Controllers that are activated by default."/>
+
+    <!-- 初始加载但不启动的控制器列表 -->
+    <!-- pos_joint_traj_controller: 普通的位置轨迹控制器（作为备用） -->
     <arg name="stopped_controllers" default="pos_joint_traj_controller" doc="Controllers that are initally loaded, but not started."/>
+
+    <!-- 控制器配置文件的路径 -->
+    <!-- 包含了所有控制器的详细配置参数（PID参数、限制等） -->
     <arg name="controller_config_file" default="$(find ur_robot_driver)/config/ur5e_controllers.yaml" doc="Config file used for defining the ROS-Control controllers."/>
+
+
+    <!-- 机器人描述文件的路径 -->
+    <!-- 包含了机器人的URDF模型定义和其他相关参数 -->
     <arg name="robot_description_file" default="$(find ur_e_description)/launch/ur5e_upload.launch" doc="Robot description launch file."/>
+
+    <!-- 运动学配置文件的路径 -->
+    <!-- 用于校准修正的运动学配置文件 -->
     <arg name="kinematics_config" default="$(find ordis_dual_arm)/etc/dual_arm_left.yaml" doc="Kinematics config file used for calibration correction. This will be used to verify the robot's calibration is matching the robot_description."/>
+
+    <!-- 工具通信参数 -->
+    <!-- 用于启用工具通信 -->
     <arg name="use_tool_communication" default="false" doc="On e-Series robots tool communication can be enabled with this argument"/>
+
+    <!-- 工具电压 -->
     <arg name="tool_voltage" default="0" doc="Tool voltage set at the beginning of the UR program. Only used, when `use_tool_communication` is set to true."/>
+
+    <!-- 工具通信奇偶校验位设置 -->
+    <!-- 奇偶校验用于通信错误检测，0表示无校验 -->
+    <!-- 仅在 use_tool_communication=true 时使用 -->
     <arg name="tool_parity" default="0" doc="Parity configuration used for tool communication. Only used, when `use_tool_communication` is set to true."/>
+
+    <!-- 工具通信波特率设置 -->
+    <!-- 定义串口通信的速率，115200是常用的波特率 -->
+    <!-- 仅在 use_tool_communication=true 时使用， -->
     <arg name="tool_baud_rate" default="115200" doc="Baud rate used for tool communication. Only used, when `use_tool_communication` is set to true."/>
+
+    <!-- 工具通信停止位设置 -->
+    <!-- 定义每个数据包结束时的停止位数量 -->
+    <!-- 仅在 use_tool_communication=true 时使用 -->
     <arg name="tool_stop_bits" default="1" doc="Number of stop bits used for tool communication. Only used, when `use_tool_communication` is set to true."/>
+
+    <!-- 接收通道空闲字符数设置 -->
+    <!-- 定义接收数据包之间的空闲字符数 -->
+    <!-- 仅在 use_tool_communication=true 时使用 -->
     <arg name="tool_rx_idle_chars" default="1.5" doc="Number of idle chars in RX channel used for tool communication. Only used, when `use_tool_communication` is set to true."/>
+
+    <!-- 发送通道空闲字符数设置 -->
+    <!-- 定义发送数据包之间的空闲字符数 -->
+    <!-- 仅在 use_tool_communication=true 时使用 -->
     <arg name="tool_tx_idle_chars" default="3.5" doc="Number of idle chars in TX channel used for tool communication. Only used, when `use_tool_communication` is set to true."/>
+
+    <!-- 工具通信设备名称 -->
+    <!-- 定义用于工具通信的本地设备文件路径 -->
+    <!-- 仅在 use_tool_communication=true 时使用 -->
     <arg name="tool_device_name" default="/tmp/ttyUR" doc="Local device name used for tool communication. Only used, when `use_tool_communication` is set to true."/>
+
+    <!-- 工具通信TCP端口 -->
+    <!-- 定义机器人控制器发布工具通信接口的端口号 -->
+    <!-- 仅在 use_tool_communication=true 时使用 -->
     <arg name="tool_tcp_port" default="54321" doc="Port on which the robot controller publishes the tool comm interface. Only used, when `use_tool_communication` is set to true."/>
-    <arg name="limited" default="false" doc="Use the description in limited mode (Every axis rotates from -PI to PI)"/>
+
+
+    <!-- 限制模式设置 -->
+    <!-- 当设为true时，每个轴的旋转范围限制在-PI到PI之间 -->
+    <!-- 用于增加安全性或满足特定应用需求，这条已废弃 -->
+    <!--<arg name="limited" default="false" doc="Use the description in limited mode (Every axis rotates from -PI to PI)"/>-->
+
+    <!-- 无头模式设置 -->
+    <!-- 当设为true时，自动向机器人发送URScript执行 -->
+    <!-- 在e系列机器人上需要设置为'远程控制'模式 -->
+    <!-- 启用此模式不需要在机器人上安装URCap -->
     <arg name="headless_mode" default="false" doc="Automatically send URScript to robot to execute. On e-Series this does require the robot to be in 'remote-control' mode. With this, the URCap is not needed on the robot."/>
 
     <include file="$(find ur_robot_driver)/launch/ur_common.launch">
@@ -31,6 +98,8 @@
         <arg name="robot_ip" value="$(arg robot_ip)"/>
         <arg name="reverse_port" value="$(arg reverse_port)"/>
         <arg name="script_sender_port" value="$(arg script_sender_port)"/>
+        <arg name="trajectory_port" value="$(arg trajectory_port)"/>
+        <arg name="script_command_port" value="$(arg script_command_port)"/>
         <arg name="limited" value="$(arg limited)"/>
         <arg name="tf_prefix" value="$(arg tf_prefix)"/>
         <arg name="controllers" value="$(arg controllers)"/>
