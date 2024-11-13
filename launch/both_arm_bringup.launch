@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <launch>
+    <!-- 将左臂的所有话题和服务放在 /left_arm 命名空间下 -->
     <include file="$(find ordis_dual_arm)/launch/left_arm_bringup.launch" ns="left_arm"/>
+
+    <!-- 将右臂的所有话题和服务放在 /right_arm 命名空间下 -->
     <include file="$(find ordis_dual_arm)/launch/right_arm_bringup.launch" ns="right_arm"/>
 </launch>
