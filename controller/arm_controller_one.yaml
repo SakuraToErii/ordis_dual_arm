@@ -1,39 +1,47 @@
+# 轨迹控制器配置
 arm_controller:
+  # 控制器类型：力矩控制的关节轨迹控制器
   type: effort_controllers/JointTrajectoryController
+  # 需要控制的关节列表
   joints:
-     - shoulder_pan_joint
-     - shoulder_lift_joint
-     - elbow_joint
-     - wrist_1_joint
-     - wrist_2_joint
-     - wrist_3_joint
+     - shoulder_pan_joint      # 肩部平移关节
+     - shoulder_lift_joint     # 肩部升降关节
+     - elbow_joint            # 肘部关节
+     - wrist_1_joint          # 腕部关节1
+     - wrist_2_joint          # 腕部关节2
+     - wrist_3_joint          # 腕部关节3
+  # 运动约束参数
   constraints:
-      goal_time: 0.6
-      stopped_velocity_tolerance: 0.05
-      shoulder_pan_joint: {trajectory: 0.1, goal: 0.1}
-      shoulder_lift_joint: {trajectory: 0.1, goal: 0.1}
-      elbow_joint: {trajectory: 0.1, goal: 0.1}
-      wrist_1_joint: {trajectory: 0.1, goal: 0.1}
-      wrist_2_joint: {trajectory: 0.1, goal: 0.1}
-      wrist_3_joint: {trajectory: 0.1, goal: 0.1}
+      goal_time: 0.6          # 达到目标位置的最大允许时间（秒）
+      stopped_velocity_tolerance: 0.05  # 认为机器人停止运动时的速度阈值
+      # 每个关节的轨迹和目标约束
+      shoulder_pan_joint: {trajectory: 0.1, goal: 0.1}      # 肩部平移关节的轨迹和目标误差容差
+      shoulder_lift_joint: {trajectory: 0.1, goal: 0.1}     # 肩部升降关节的轨迹和目标误差容差
+      elbow_joint: {trajectory: 0.1, goal: 0.1}            # 肘部关节的轨迹和目标误差容差
+      wrist_1_joint: {trajectory: 0.1, goal: 0.1}          # 腕部关节1的轨迹和目标误差容差
+      wrist_2_joint: {trajectory: 0.1, goal: 0.1}          # 腕部关节2的轨迹和目标误差容差
+      wrist_3_joint: {trajectory: 0.1, goal: 0.1}          # 腕部关节3的轨迹和目标误差容差
+  # PID控制器增益参数
   gains:
-    shoulder_pan_joint: {p: 50000, d: 10, i: 1, i_clamp: 1}
-    shoulder_lift_joint: {p: 50000, d: 10, i: 5, i_clamp: 1}
-    elbow_joint: {p: 10000, d: 5, i: 1, i_clamp: 1}
-    wrist_1_joint: {p: 1000, d: 1, i: 1, i_clamp: 1}
-    wrist_2_joint: {p: 800, d: 1, i: 1, i_clamp: 1}
-    wrist_3_joint: {p: 500, d: 1, i: 1, i_clamp: 1}
-  stop_trajectory_duration: 0.5
-  state_publish_rate:  25
-  action_monitor_rate: 10
+    shoulder_pan_joint: {p: 50000, d: 10, i: 1, i_clamp: 1}    # 肩部平移关节PID参数
+    shoulder_lift_joint: {p: 50000, d: 10, i: 5, i_clamp: 1}   # 肩部升降关节PID参数
+    elbow_joint: {p: 10000, d: 5, i: 1, i_clamp: 1}           # 肘部关节PID参数
+    wrist_1_joint: {p: 1000, d: 1, i: 1, i_clamp: 1}          # 腕部关节1PID参数
+    wrist_2_joint: {p: 800, d: 1, i: 1, i_clamp: 1}           # 腕部关节2PID参数
+    wrist_3_joint: {p: 500, d: 1, i: 1, i_clamp: 1}           # 腕部关节3PID参数
+  stop_trajectory_duration: 0.5     # 停止轨迹执行的过渡时间（秒）
+  state_publish_rate:  25          # 控制器状态发布频率（Hz）
+  action_monitor_rate: 10          # action 反馈的发布频率（Hz）
 
+# 关节组位置控制器配置
 joint_group_position_controller:
+  # 控制器类型：位置控制的关节组控制器
   type: position_controllers/JointGroupPositionController
+  # 需要控制的关节列表
   joints:
-     - shoulder_pan_joint
-     - shoulder_lift_joint
-     - elbow_joint
-     - wrist_1_joint
-     - wrist_2_joint
-     - wrist_3_joint
-
+     - shoulder_pan_joint      # 肩部平移关节
+     - shoulder_lift_joint     # 肩部升降关节
+     - elbow_joint            # 肘部关节
+     - wrist_1_joint          # 腕部关节1
+     - wrist_2_joint          # 腕部关节2
+     - wrist_3_joint          # 腕部关节3

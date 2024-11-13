@@ -40,38 +40,38 @@ Finally, clone and build this repo.
 - Power up the robot. Open and run the program ```external_control.urp``` on the robot.
 - Run the ur_robot_driver
 ```
-$ roslaunch macs_dual_arm left_arm_bringup.launch
+$ roslaunch ordis_dual_arm left_arm_bringup.launch
 ```
 - Run the moveit ros move group
 ```
-$ roslaunch macs_dual_arm single_arm_moveit_planning_execution.launch
+$ roslaunch ordis_dual_arm single_arm_moveit_planning_execution.launch
 ```
 - Start Rviz
 ```
-roslaunch macs_dual_arm single_arm_moveit_rviz.launch
+roslaunch ordis_dual_arm single_arm_moveit_rviz.launch
 ```
 
 ### Control both arms using Rviz with MoveIt! plugin
 - Power up the robot. Open and run the program ```external_control.urp``` on both robots.
 - Run the ur_robot_driver
 ```
-$ roslaunch macs_dual_arm both_arm_bringup.launch
+$ roslaunch ordis_dual_arm both_arm_bringup.launch
 ```
 - Run the moveit ros move group
 ```
-$ roslaunch macs_dual_arm both_arm_moveit_planning_execution.launch
+$ roslaunch ordis_dual_arm both_arm_moveit_planning_execution.launch
 ```
 - Start Rviz
 ```
-roslaunch macs_dual_arm both_arm_moveit_rviz.launch
+roslaunch ordis_dual_arm both_arm_moveit_rviz.launch
 ```
 
 ### Visualize both arms with robot cell in Gazebo
 
 - Clone this repository in your catkin workspace
-- Change the address to the mesh files in `macs_dual_arm/sdf/robot_cell.sdf`
+- Change the address to the mesh files in `ordis_dual_arm/sdf/robot_cell.sdf`
 - Execute `catkin_make` in your catkin workspace
-- Run `roslaunch macs_dual_arm ur5e_macs_new.launch limited:=true` to bring up the two UR5e arms attached to the robot cell in Gazebo
+- Run `roslaunch ordis_dual_arm ur5e_macs_new.launch limited:=true` to bring up the two UR5e arms attached to the robot cell in Gazebo
 
 ## Todo
 

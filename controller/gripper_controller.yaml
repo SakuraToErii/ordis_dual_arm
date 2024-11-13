@@ -1,26 +1,39 @@
+# 夹爪轨迹控制器配置
 gripper_controller:
+  # 控制器类型：力矩控制的关节轨迹控制器
   type: effort_controllers/JointTrajectoryController
+  # 需要控制的关节列表
   joints: 
-    - left_finger_joint
-    - right_finger_joint
+    - left_finger_joint       # 左手指关节
+    - right_finger_joint      # 右手指关节
+  # PID控制器增益参数
   gains:
-    left_finger_joint: {p: 4000, d: 40, i: 1, i_clamp: 1}
-    right_finger_joint: {p: 4000, d: 40, i: 1, i_clamp: 1}
+    left_finger_joint: {p: 4000, d: 40, i: 1, i_clamp: 1}     # 左手指关节PID参数
+    right_finger_joint: {p: 4000, d: 40, i: 1, i_clamp: 1}    # 右手指关节PID参数
+  # 运动约束参数
   constraints:
-    goal_time: 0.1
-    stopped_velocity_tolerance: 0.01
-    left_finger_joint: {trajectory: 0.1, goal: 0.1}
-    right_finger_joint: {trajectory: 0.1, goal: 0.1}
-  stop_trajectory_duration: 0.5
-  state_publish_rate:  50
-  action_monitor_rate: 10
+    goal_time: 0.1           # 达到目标位置的最大允许时间（秒）
+    stopped_velocity_tolerance: 0.01  # 认为夹爪停止运动时的速度阈值
+    left_finger_joint: {trajectory: 0.1, goal: 0.1}    # 左手指关节的轨迹和目标误差容差
+    right_finger_joint: {trajectory: 0.1, goal: 0.1}   # 右手指关节的轨迹和目标误差容差
+  stop_trajectory_duration: 0.5     # 停止轨迹执行的过渡时间（秒）
+  state_publish_rate:  50          # 控制器状态发布频率（Hz）
+  action_monitor_rate: 10          # action 反馈的发布频率（Hz）
 
+# 左手指位置控制器配置
 left_finger_controller:
+  # 控制器类型：力矩控制的关节位置控制器
   type: effort_controllers/JointPositionController
-  joint: left_finger_joint
-  pid: {p: 10, i: 0.01, d: 1}
+  # 控制的关节
+  joint: left_finger_joint         # 左手指关节
+  # PID控制参数
+  pid: {p: 10, i: 0.01, d: 1}     # 位置控制的PID参数
 
+# 右手指位置控制器配置
 right_finger_controller:
+  # 控制器类型：力矩控制的关节位置控制器
   type: effort_controllers/JointPositionController
-  joint: right_finger_joint
-  pid: {p: 10, i: 0.01, d: 1}
+  # 控制的关节
+  joint: right_finger_joint        # 右手指关节
+  # PID控制参数
+  pid: {p: 10, i: 0.01, d: 1}     # 位置控制的PID参数
