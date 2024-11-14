@@ -29,7 +29,7 @@
 
     <!-- 机器人描述文件的路径 -->
     <!-- 包含了机器人的URDF模型定义和其他相关参数 -->
-    <arg name="robot_description_file" default="$(find ur_e_description)/launch/ur5e_upload.launch" doc="Robot description launch file."/>
+    <arg name="robot_description_file" default="$(find ur_description)/launch/load_ur5e.launch" doc="Robot description launch file."/>
 
     <!-- 运动学配置文件的路径 -->
     <!-- 用于校准修正的运动学配置文件 -->
@@ -100,7 +100,7 @@
         <arg name="script_sender_port" value="$(arg script_sender_port)"/>
         <arg name="trajectory_port" value="$(arg trajectory_port)"/>
         <arg name="script_command_port" value="$(arg script_command_port)"/>
-        <arg name="limited" value="$(arg limited)"/>
+        <!-- <arg name="limited" value="$(arg limited)"/> -->
         <arg name="tf_prefix" value="$(arg tf_prefix)"/>
         <arg name="controllers" value="$(arg controllers)"/>
         <arg name="stopped_controllers" value="$(arg stopped_controllers)"/>
